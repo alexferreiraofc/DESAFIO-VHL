@@ -1,0 +1,12 @@
+# Desafio consiste em criar uma aplicação com OpenCms + Postgres + Linux + Nginx com proxy reverso
+
+# O objetivo final é acessar a instalação OpenCMS através do NGINX com reverse proxy
+
+# Devo documentar todo o processo, passo a passo, fornecendo comandos utilizados
+
+# Publicar no repo github toda a doc criada.
+Incluir qualquer script, arquivo de config ou outros artefatos criados ou MODIFICADOS como parte do exercicio.
+
+# Diff:
+ APÓS o processo manual, realizar o setup utilizando docker e automações shell scripting
+
