@@ -81,7 +81,34 @@ wget http://www.opencms.org/downloads/opencms/opencms-17.0.zip
 
 unzip opencms-17.0.zip
 
+mv opencms.war /opt/tomcat/webapps
 
+# - > DEPLOY ERRO TOMCAT/OPENCMS: 404 not found
+Após algumas tentativas, verificar logs e afins, não consegui compreender o motivo de não fazer o deploy com sucesso do opencms. Optei por remover as versões atuais e tentar com uma versão que use os pacotes java EE ao invés do Jakarta.
 
+Feito alteração dos pacotes
+Novos:
 
+OpenCms 13
+Tomcat 9.0.35
 
+Obtive sucesso ao atingir o endpoint /opencms/setup
+
+O processo com os arquivos é o mesmo dos anteriores, consiste em instalar o tomcat na pasta /opt/tomcat
+e extrair o arquivo do opencms dentro da pasta /opt/tomcat/webapps
+
+Com os links novos é possível utilizar o mesmo passo a passo acima e atingir com sucesso o deploy do opencms
+
+# Atualizando JDK
+sudo apt remove openjdk-17-jdk
+sudo apt install openjdk-11-jdk
+
+sudo update-alternatives --config java
+escolha a JDK 11
+
+sudo update-alternatives --config javac
+
+Confira as versões
+
+java -version
+javac -version

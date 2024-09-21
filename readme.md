@@ -11,7 +11,7 @@ https://hub.docker.com/r/alkacon/opencms-docker/
 
 
 # Notas 
-- Baixar JDK 17
+- Baixar JDK 11 ⚠️
 - Atenção ao [OpenCms](#requisitos) que vai ser instalado, a versão do JDK e tomcat vão mudar se for outra versão de OpenCms
 - ⚠️ Tomcat 9 = JDK 11 - Pacotes Java EE
 - ⚠️ Tomcat 10 = JDK 17 - Pacotes Jakarta
@@ -19,10 +19,10 @@ https://hub.docker.com/r/alkacon/opencms-docker/
 # Requisitos
 Pode ser baixado clicando diretamente aqui ou usando **wget**.
 - [Ubuntu](https://releases.ubuntu.com/jammy/ubuntu-22.04.5-desktop-amd64.iso) - 22.04
-- Java 17 JDK
-  - sudo apt install openjdk-17-jdk
+- Java 11 JDK
+  - sudo apt install openjdk-11-jdk
 - PostgreSQL 14
   - sudo apt install postgresql-14
-- [Tomcat 10.1.30](https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.30/bin/apache-tomcat-10.1.30.tar.gz)
-- [OpenCms 17](http://www.opencms.org/downloads/opencms/opencms-17.0.zip)
+- [Tomcat 9.0.95](https://downloads.apache.org/tomcat/tomcat-9/v9.0.95/bin/apache-tomcat-9.0.95.tar.gz)
+- [OpenCms 13](http://www.opencms.org/downloads/opencms/opencms-13.0.zip)
 - Nginx
