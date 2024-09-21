@@ -1,12 +1,87 @@
-# Desafio consiste em criar uma aplicação com OpenCms + Postgres + Linux + Nginx com proxy reverso
+# Desafio consiste em:
+criar uma aplicação com OpenCms + Postgres + Linux + Nginx com proxy reverso. O objetivo final é acessar a instalação OpenCMS através do NGINX com reverse proxy.
 
-# O objetivo final é acessar a instalação OpenCMS através do NGINX com reverse proxy
+## Devo:
+documentar todo o processo, passo a passo, fornecendo comandos utilizados
 
-# Devo documentar todo o processo, passo a passo, fornecendo comandos utilizados
+## Publicar no repo github
+Toda a doc criada, incluir qualquer script, **arquivo de config** ou outros artefatos criados ou **MODIFICADOS** como parte do exercicio.
 
-# Publicar no repo github toda a doc criada.
-Incluir qualquer script, arquivo de config ou outros artefatos criados ou MODIFICADOS como parte do exercicio.
+# Tarefas 🚀
+- [x] Baixar ISO Ubuntu 22.04
+  - ⚠️ Comentário importante sobre a tarefa 1
+- [x] Baixar JDK 17
+- [x] Baixar Tomcat
+- [x] Baixar PostgreSQL
+- [x] Baixar OpenCms
 
-# Diff:
- APÓS o processo manual, realizar o setup utilizando docker e automações shell scripting
+- [] Baixar Nginx - Apesar de ser essencial e manter a segurança, pode ser configurado por último via acesso remoto da máquina onde será feito o deploy do projeto.
+
+
+Após ler a doc, percebi que já existe uma imagem no Hub com o openCMS e as dependencias, porém o banco é MariaDB.
+
+
+Baixei uma VM do ubuntu 22.04 (jammy)
+os seguintes comandos foram rodados:
+
+# Permissão de adm na VM
+
+su -
+admin
+sudo adduser seu_usuario sudo
+su seu_usuario
+
+# atualizando pacotes
+sudo apt-get update ; apt-get upgrade -y
+
+# JDK 17
+sudo apt install openjdk-17-jdk
+
+java -version
+
+openjdk17 ou 11 - depende do opencms e do tomcat, após o tomcat 10, já utiliza os pacotes Jakarta e não mais java EE
+
+# PostgreSQL 14
+sudo apt install postgresql-14
+
+sudo systemctl status postgresql
+
+sudo -u postgres psql
+
+SELECT version();
+q
+
+\q
+
+# Tomcat o gato...
+https://dlcdn.apache.org
+
+
+wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.30/bin/apache-tomcat-10.1.30.tar.gz
+
+tar -zxvf apache-tomcat-10.1.30.tar.gz
+
+sudo mv apache-tomcat-10.1.30.tar.gz /opt/tomcat
+/opt/tomcat/bin/./startup.sh
+
+wget https://localhost:8080
+
+*cat* no index.html que foi baixado pra confirmar caso não seja feito na OS com GUI
+cat index.html | grep successfully
+
+## Retorno esperado:
+> "If you're seeing this, you've **successfully** installed Tomcat. Congrats"
+
+
+# OpenCms
+⚠️ Com o tomcat em execução, extrair o arquivo .WAR para dentro do diretório webapps do tomcat, dessa forma ele vai fazer o deploy do opencms.
+
+
+wget http://www.opencms.org/downloads/opencms/opencms-17.0.zip
+
+unzip opencms-17.0.zip
+
+
+
+
 
