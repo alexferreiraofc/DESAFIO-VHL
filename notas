@@ -136,6 +136,38 @@ create db and user [x] Check
 Create Tables [x] Check
 
 
+# NGINX
+
+sudo apt install nginx
+
+sudo nano /etc/nginx/sites-available/default
+ou
+sudo nano /etc/nginx/conf.d/
+
+
+
+server {
+    listen 80;
+    server_name localhost;
+
+    location / {
+        proxy_pass http://127.0.0.1:8080/opencms/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+
+
+/etc/hosts 
+
+Porém o site não está indo, apesar de adicionar o localhost, ele meio que da uma sobrecarga e não acessa a url certa.
+
+Ainda não encontrei documentação suficiente sobre fazer esse proxy acessar o opencms, parece que quando ele tenta chegar nessa url, o tomcat joga de volta pro localhost vazio
+
+
+
+
 # DESCONTINUADO ###################################################
 ## JDK 17
 sudo apt install openjdk-17-jdk

@@ -77,7 +77,7 @@ https://localhost:8080/opencms/setup
 
 O setup é simples, as configurações são essas:
 No OpenCms
--Setup Connection:
+- Setup Connection:
 postgres
 postgres
 template1
@@ -95,4 +95,25 @@ NEXT!
 Aguardar até o fim da instalação, o site vai abrir automaticamente 🚀🚀 
 
 # Aplicando NGINX ao projeto
-..
+sudo apt install nginx
+
+sudo nano /etc/nginx/sites-available/default
+ou
+sudo nano /etc/nginx/conf.d/
+
+
+
+server {
+    listen 80;
+    server_name localhost;
+
+    location / {
+        proxy_pass http://127.0.0.1:8080/opencms/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+
+
+/etc/hosts 
