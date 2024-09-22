@@ -1,15 +1,23 @@
 # Nota Pessoal
 Neste repositório haverá duas formas de atingir o objetivo, elas serão encontradas nos tópicos seguintes.
 
-- Processo manual via VM da ISO do Ubuntu 22.04[#ubuntu](#processo-manual-via-iso-de-uma-vm)
-- O processo via Docker será feito [aqui](#docker)
-
 Os problemas e dificuldades encontradas no projeto foram relatadas no arquivo [notas-pessoais](notas-pessoais.md) desse repositório e aqui apenas a documentação oficial.
 
-Foi muito interessante participar desse desafio, espero que a documentação esteja de acordo com o esperado. **Até breve**, Alex.
+Foi muito interessante participar desse desafio, espero que a documentação esteja de acordo com o esperado. **Até breve**, 
+
+Alex.
+
+# Glossário
+
+- Processo manual via VM da ISO do Ubuntu 22.04 [ubuntu](#requisitos)
+- O processo via Docker será feito [aqui](#docker)
+- Documentação auxiliar utilizada [aqui](#docs)
+- Notas pessoais durante o projeto [aqui](/notas-pessoais.md)
+- Considerações finais [aqui](#considerações-finais)
 
 # Processo Manual via ISO de uma VM
-- O processo Manual é feito instalando uma ISO do sistema Ubuntu 22.04 como base, e isso pode ser feito [aqui](#docker-)
+- O processo Manual é feito instalando uma ISO do sistema Ubuntu 22.04
+- Inicie a máquina virtual.
 
 ## Requisitos
 Pode ser baixado clicando diretamente aqui ou usando **wget**.
@@ -26,12 +34,6 @@ Pode ser baixado clicando diretamente aqui ou usando **wget**.
 - [OpenCms 13](http://www.opencms.org/downloads/opencms/opencms-13.0.zip)
 - Nginx
 
-## Docs
-https://documentation.opencms.org/opencms-documentation/introduction/get-started/
-https://tomcat.apache.org
-https://ubuntu.com/download
-
-https://medium.com/@jasonrbodie/learn-linux-install-apache-tomcat-10-and-nginx-on-ubuntu-24-04-5bcdd9fad1c9#b345
 
 ## Notas
 - Baixar JDK 11
@@ -62,12 +64,16 @@ sudo mv apache-tomcat-9.0.95 /opt/tomcat
 wget https://localhost:8080
 ```
 
-*cat* no index.html que foi baixado pra confirmar caso não seja feito na OS com GUI
+'cat' no index.html que foi baixado pra confirmar caso não seja feito na OS com GUI
+
+ ```bash 
 cat index.html | grep successfully
+```
 
 ## Configurando o PostgreSQL
 Alterar o **pg_hba.conf** para **trust** para acessar o postgres sem senha
-- [x] Alterar a senha do **postgres** para **postgres**
+
+- Alterar a senha do **postgres** para **postgres**
 
 - **Diretório**:
  ```bash 
@@ -100,23 +106,24 @@ Finalmente com tudo configurado, vamos bater na URL do setup do OpenCms
 https://localhost:8080/opencms/setup
 
 O setup é simples, as configurações são essas:
-No OpenCms
+
 - Setup Connection:
-postgres
-postgres
-template1
+    - postgres
+    - postgres
+    - template1
 
 - OpenCms Connection:
-opencms
-opencms
+    - opencms
+    - opencms
 
 - DB Name: **opencms**
-**Create db and user** [x] Check
-**Create Tables** [x] Check
+    - **Create db and user** [x] Check
+    - **Create Tables** [x] Check
 
 NEXT!
 
 Aguardar até o fim da instalação, o site vai abrir automaticamente 🚀🚀 
+
 ![Sucesso!](/images/image.png)
 
 ## Aplicando NGINX ao projeto
@@ -131,15 +138,22 @@ sudo nano /etc/nginx/conf.d/
 ```
 
  ```nano
-server {
-    listen 80;
-    server_name localhost;
+worker_processes 1;
 
-    location / {
-        proxy_pass http://127.0.0.1:8080/opencms/;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+events {
+    worker_connections 1024;
+}
+
+http {
+    server {
+        listen 80;
+        server_name localhost;
+
+        location / {
+            proxy_pass http://tomcat_container:8080/opencms/setup/;
+            proxy_redirect off;
+            proxy_set_header Host $host;
+        }
     }
 }
 ```
@@ -149,7 +163,7 @@ server {
 - Antes de executar o projeto, deve ser feito o download do arquivo *opencms.war* [aqui](http://www.opencms.org/downloads/opencms/opencms-13.0.zip)
 
 
-> **IMPORTANTE⚠️**
+> **IMPORTANTE⚠️:**
 Os arquivos devem conter diretórios separados para cada imagem, o arquivo do opencms.war deve estar na pasta projeto/tomcat/opencms a estrutura deve ser assim:
 ```
 |projeto-docker/
@@ -167,7 +181,8 @@ Os arquivos devem conter diretórios separados para cada imagem, o arquivo do op
 ```
 ## Acessando o setup do OpenCms
 
-[opencsmsetup](http://localhost:8080/opencms/setup)
+[Link do Setup](http://localhost:8080/opencms/setup)
+
 
 ![setup](/images/opencms_setup.png)
 
@@ -175,15 +190,91 @@ next > finish
 
 # Nginx...
 
-Estou com uma certa dificuldade em fazer o proxy reverso, mesmo configurando ele permanece na página padrão do nginx, ainda é possível acessar a URL do opencms diretamente
+Devemos conferir se o NGINX está com o arquivo de configuração correto, é possível verificar acessaro o arquivo diretamente.
 
-Após algumas horas de tentativa, eu obtive algum progresso ao acessar a URL 
+No diretório raiz do projeto(onde está o docker-compose.yml) digite no console o seguinte comando:
+
+```bash
+docker exec -it nginx_container bash
+```
+
+- Acessando o arquivo **nginx.conf**
+
+```bash
+cd /etc/nginx
+ls
+nano nginx.conf
+```
+
+> Caso não consiga abrir o arquivo nginx.conf com o nano, ele não vem implementado por padrão nos containers, tente executar o seguinte:
+
+```bash
+apt-get update ; apt-get upgrade
+apt install nano
+```
+
+> Tente repetir o passo anterior do nano nginx.conf
+O arquivo deve estar igual ao modelo abaixo:
+
+
+```nano
+worker_processes 1;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    server {
+        listen 80;
+        server_name localhost;
+
+        location / {
+            # Acessar o setup substitua por:
+            # http://tomcat_container:8080/opencms/setup/
+            proxy_pass http://tomcat_container:8080/opencms/overview/;
+            proxy_redirect off;
+            proxy_set_header Host $host;
+        }
+    }
+}
+```
+
+Por via das dúvidas, podemos executar um reload no NGINX para garantir que tudo está OK
+
+```bash
+nginx -s reload
+```
+
+- Adicionar ao arquivo hosts em:
+
+Windows: C:\Windows\System32\drivers\etc
+
+```nano
+127.0.0.1 vhl.local
+```
+
+Acesse a URL :
 
 http://localhost/
 
-Ele me direcionou ao site do opencms, porém, ficou todo bugado. Mas obtive retorno no terminal
 
 Adicionar ao arquivo hosts
 127.0.0.1 vhl.local
 
-A partir de agora, quando tentar acessar vhl.local no navegador, ele vai direcionar ao site do OpenCms.
+A partir de agora, quando tentar acessar vhl.local no navegador, ele vai direcionar ao site do OpenCms e você já vai estar recebendo o retorno dessas requisições aqui no terminal 🚀 🚀.
+
+# Considerações Finais
+
+Caso o objetivo final seja apenas chegar a tela de setup do OpenCms
+os volumes devem ser removidos do arquivo docker-compose.yml que está no diretório raiz do projeto e deve ser alterado o direcionamento do nginx.conf
+
+
+
+# Docs
+![OpenCms Docs](https://documentation.opencms.org/opencms-documentation/introduction/get-started/)
+![Tomcat Docs](https://tomcat.apache.org)
+
+![Quick Commands](https://medium.com/@jasonrbodie/learn-linux-install-apache-tomcat-10-and-nginx-on-ubuntu-24-04-5bcdd9fad1c9#b345)
+
+![PostgreSQL Password Recovery](https://community.qlik.com/t5/Connectivity-Data-Prep/PostgreSQL-Password-forgot/td-p/2160246)
