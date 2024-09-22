@@ -81,6 +81,7 @@ CTRL + O = Salvar
 CTRL + X = Sair
 
 - Novamente no terminal, execute os comandos na seguinte ordem:
+
  ```bash 
 su -
 admin
@@ -143,18 +144,17 @@ server {
 }
 ```
 
-/etc/hosts 
-
 # Docker 🐳 
-- Processo via Docker
 
-## O projeto
-> [!IMPORTANTE]
+- Antes de executar o projeto, deve ser feito o download do arquivo *opencms.war* [aqui](http://www.opencms.org/downloads/opencms/opencms-13.0.zip)
+
+
+> **IMPORTANTE⚠️**
 Os arquivos devem conter diretórios separados para cada imagem, o arquivo do opencms.war deve estar na pasta projeto/tomcat/opencms a estrutura deve ser assim:
 
 - projeto-docker
- - Base (Ubuntu + JDK + Tomcat/opencms/opencms.war > Nginx(Instalar por ultimo))
- - Postgres
+ - tomcat (Ubuntu + JDK + Tomcat/opencms/opencms.war > Nginx(Instalar por ultimo))
+ - postgres
  - Nginx (acredito que será embutido no base)
 
  O projeto pode ser iniciado acessando a pasta **projeto-docker** e rodando o seguinte comando:

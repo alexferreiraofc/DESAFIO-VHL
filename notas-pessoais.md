@@ -179,7 +179,37 @@ O passo 1 é a hierarquia de pastas aqui do vscode, ficando desta forma:
 
 Como o postgres responde separado apenas expondo a porta 5432, posso deixar ele numa imagem a parte, porém não estou conseguindo fazer o setup do OpenCms, acredito que preciso fazer o passo a passo dentro do postgres pra trocar o password ou liberar trust no pg_hba.conf
 
+Resolvido:
+Database Config:
+Connection String: jdbc:postgresql://**postgres_container**:5432/
+Eu estava deixando o localhost
 
+
+> teste de trust + senha padrao postgres
+ENV POSTGRES_HOST_AUTH_METHOD=trust
+RUN POSTGRES_PASSWORD=postgres
+
+>Setup Connection:
+postgres
+postgres
+#template1
+
+>connection config:
+opencms
+opencms
+
+string url : 
+jdbc:postgresql://postgres_container:5432/
+
+Create DB User[x]
+Creatle tables [x]
+
+```bash
+docker exec -it tomcat_container bash
+```
+´´´bash
+apt-get update
+´´´
 
 # DESCONTINUADO ###################################################
 ## JDK 17
