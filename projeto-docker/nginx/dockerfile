@@ -1,0 +1,10 @@
+FROM nginx:1.24
+
+# copia o arquivo conf pra dentro do nginx
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# é necessário rodar um reload
+RUN apt-get update && apt-get install -y nano
+
+
+EXPOSE 80

@@ -15,7 +15,20 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
+    volumes:
+      - tomcat_data:/usr/local/tomcat/webapps
+
+# NGINX adicionado ao projeto.
+  nginx:
+    build: ./nginx
+    container_name: nginx_container
+    ports:
+     - "80:80"
+    depends_on:
+     - tomcat
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
 
 volumes:
-# Nome do meu volume
   postgres_data:
+  tomcat_data:

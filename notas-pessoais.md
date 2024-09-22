@@ -211,6 +211,28 @@ docker exec -it tomcat_container bash
 apt-get update
 ´´´
 
+Executando nginx na imagem do tomcat pra teste
+na pasta raiz do projeto onde está o docker-compose.yml execute:
+
+docker exec -it tomcat_container bash
+apt get nginx
+
+
+>> adicionar ao dockerfile 
+apt update
+apt install net-tools
+
+
+http://localhost/
+
+retornou alguma coisa no terminal.
+
+Parece que o direcionamento funcionou, estou recebendo resposta das requisições no terminal do projeto.
+
+
+
+opencms.local
+
 # DESCONTINUADO ###################################################
 ## JDK 17
 sudo apt install openjdk-17-jdk

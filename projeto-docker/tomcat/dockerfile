@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     openjdk-11-jdk \
     wget \
     curl \
+    net-tools \
     && rm -rf /var/lib/apt/lists/*
 
 # Define o diretório de trabalho
@@ -25,3 +26,5 @@ CMD ["/usr/local/tomcat/bin/catalina.sh", "run"]
 
 # Copia o arquivo .war para a pasta de deploy do tomcat
 COPY opencms/opencms.war /usr/local/tomcat/webapps/
+
+RUN apt update

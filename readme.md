@@ -34,7 +34,7 @@ https://ubuntu.com/download
 https://medium.com/@jasonrbodie/learn-linux-install-apache-tomcat-10-and-nginx-on-ubuntu-24-04-5bcdd9fad1c9#b345
 
 ## Notas
-- Baixar JDK 11 ⚠️
+- Baixar JDK 11
 - Atenção ao [OpenCms](#requisitos) que vai ser instalado, a versão do JDK e tomcat vão mudar se for outra versão de OpenCms
 - ⚠️ Tomcat 9 = JDK 11 - Pacotes Java EE
 - ⚠️ Tomcat 10 = JDK 17 - Pacotes Jakarta
@@ -151,20 +151,39 @@ server {
 
 > **IMPORTANTE⚠️**
 Os arquivos devem conter diretórios separados para cada imagem, o arquivo do opencms.war deve estar na pasta projeto/tomcat/opencms a estrutura deve ser assim:
-
-- projeto-docker/
-├── tomcat (Ubuntu + JDK + Tomcat/opencms/opencms.war > Nginx(Instalar por ultimo))
-    └── opencms/
-└── postgres/
-
- - Nginx (acredito que será embutido no base)
+```
+|projeto-docker/
+|── tomcat (Ubuntu + JDK + Tomcat/opencms/opencms.war > Nginx(Instalar por ultimo))
+|    └── opencms/
+|── postgres/
+|── Nginx
+ ```
 
  O projeto pode ser iniciado acessando a pasta **projeto-docker** e rodando o seguinte comando:
  
  ```bash
+ cd projeto-docker
  docker-compose up --build
 ```
 ## Acessando o setup do OpenCms
 
-http://localhost:8080/opencms/setup
+[opencsmsetup](http://localhost:8080/opencms/setup)
 
+![setup](/images/opencms_setup.png)
+
+next > finish
+
+# Nginx...
+
+Estou com uma certa dificuldade em fazer o proxy reverso, mesmo configurando ele permanece na página padrão do nginx, ainda é possível acessar a URL do opencms diretamente
+
+Após algumas horas de tentativa, eu obtive algum progresso ao acessar a URL 
+
+http://localhost/
+
+Ele me direcionou ao site do opencms, porém, ficou todo bugado. Mas obtive retorno no terminal
+
+Adicionar ao arquivo hosts
+127.0.0.1 vhl.local
+
+A partir de agora, quando tentar acessar vhl.local no navegador, ele vai direcionar ao site do OpenCms.
