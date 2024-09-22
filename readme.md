@@ -9,7 +9,7 @@ Os problemas e dificuldades encontradas no projeto foram relatadas no arquivo [n
 Foi muito interessante participar desse desafio, espero que a documentação esteja de acordo com o esperado. **Até breve**, Alex.
 
 # Processo Manual via ISO de uma VM
-- O processo Manual é feito instalando uma ISO do sistema Ubuntu 22.04 como base, e isso pode ser feito [aqui](#requisitos)
+- O processo Manual é feito instalando uma ISO do sistema Ubuntu 22.04 como base, e isso pode ser feito [aqui](#docker-)
 
 ## Requisitos
 Pode ser baixado clicando diretamente aqui ou usando **wget**.
@@ -117,7 +117,7 @@ opencms
 NEXT!
 
 Aguardar até o fim da instalação, o site vai abrir automaticamente 🚀🚀 
-[Sucesso!](/images/image.png)
+![Sucesso!](/images/image.png)
 
 ## Aplicando NGINX ao projeto
  ```bash
@@ -144,7 +144,7 @@ server {
 }
 ```
 
-# Docker 🐳 
+# Docker 🐳
 
 - Antes de executar o projeto, deve ser feito o download do arquivo *opencms.war* [aqui](http://www.opencms.org/downloads/opencms/opencms-13.0.zip)
 
@@ -152,9 +152,11 @@ server {
 > **IMPORTANTE⚠️**
 Os arquivos devem conter diretórios separados para cada imagem, o arquivo do opencms.war deve estar na pasta projeto/tomcat/opencms a estrutura deve ser assim:
 
-- projeto-docker
- - tomcat (Ubuntu + JDK + Tomcat/opencms/opencms.war > Nginx(Instalar por ultimo))
- - postgres
+- projeto-docker/
+├── tomcat (Ubuntu + JDK + Tomcat/opencms/opencms.war > Nginx(Instalar por ultimo))
+    └── opencms/
+└── postgres/
+
  - Nginx (acredito que será embutido no base)
 
  O projeto pode ser iniciado acessando a pasta **projeto-docker** e rodando o seguinte comando:
@@ -162,3 +164,7 @@ Os arquivos devem conter diretórios separados para cada imagem, o arquivo do op
  ```bash
  docker-compose up --build
 ```
+## Acessando o setup do OpenCms
+
+http://localhost:8080/opencms/setup
+
