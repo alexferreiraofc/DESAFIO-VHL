@@ -256,6 +256,8 @@ Windows: C:\Windows\System32\drivers\etc
 
 Acesse a URL :
 
+vhl.local
+ou
 http://localhost/
 
 
@@ -272,9 +274,8 @@ os volumes devem ser removidos do arquivo docker-compose.yml que est√° no diret√
 
 
 # Docs
-![OpenCms Docs](https://documentation.opencms.org/opencms-documentation/introduction/get-started/)
-![Tomcat Docs](https://tomcat.apache.org)
+- [OpenCms Docs](https://documentation.opencms.org/opencms-documentation/introduction/get-started/)
+[Tomcat Docs](https://tomcat.apache.org)
+[Quick Commands](https://medium.com/@jasonrbodie/learn-linux-install-apache-tomcat-10-and-nginx-on-ubuntu-24-04-5bcdd9fad1c9#b345)
 
-![Quick Commands](https://medium.com/@jasonrbodie/learn-linux-install-apache-tomcat-10-and-nginx-on-ubuntu-24-04-5bcdd9fad1c9#b345)
-
-![PostgreSQL Password Recovery](https://community.qlik.com/t5/Connectivity-Data-Prep/PostgreSQL-Password-forgot/td-p/2160246)
+[PostgreSQL Password Recovery](https://community.qlik.com/t5/Connectivity-Data-Prep/PostgreSQL-Password-forgot/td-p/2160246)
