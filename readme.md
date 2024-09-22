@@ -1,21 +1,17 @@
-# Docs
-https://documentation.opencms.org/opencms-documentation/introduction/get-started/
-https://tomcat.apache.org
-https://ubuntu.com/download
+# Nota Pessoal
+Neste repositório haverá duas formas de atingir o objetivo, elas serão encontradas nos tópicos seguintes.
 
-https://medium.com/@jasonrbodie/learn-linux-install-apache-tomcat-10-and-nginx-on-ubuntu-24-04-5bcdd9fad1c9#b345
+- Processo manual via VM da ISO do Ubuntu 22.04[#ubuntu](#processo-manual-via-iso-de-uma-vm)
+- O processo via Docker será feito [aqui](#docker)
 
-# Docker img (mariaDB!)
-https://hub.docker.com/r/alkacon/opencms-docker/
+Os problemas e dificuldades encontradas no projeto foram relatadas no arquivo [notas-pessoais](notas-pessoais.md) desse repositório e aqui apenas a documentação oficial.
 
+Foi muito interessante participar desse desafio, espero que a documentação esteja de acordo com o esperado. **Até breve**, Alex.
 
-# Notas
-- Baixar JDK 11 ⚠️
-- Atenção ao [OpenCms](#requisitos) que vai ser instalado, a versão do JDK e tomcat vão mudar se for outra versão de OpenCms
-- ⚠️ Tomcat 9 = JDK 11 - Pacotes Java EE
-- ⚠️ Tomcat 10 = JDK 17 - Pacotes Jakarta
+# Processo Manual via ISO de uma VM
+- O processo Manual é feito instalando uma ISO do sistema Ubuntu 22.04 como base, e isso pode ser feito [aqui](#requisitos)
 
-# Requisitos
+## Requisitos
 Pode ser baixado clicando diretamente aqui ou usando **wget**.
 - [Ubuntu](https://releases.ubuntu.com/jammy/ubuntu-22.04.5-desktop-amd64.iso) - 22.04
 - Java 11 JDK
@@ -26,12 +22,26 @@ Pode ser baixado clicando diretamente aqui ou usando **wget**.
 - [OpenCms 13](http://www.opencms.org/downloads/opencms/opencms-13.0.zip)
 - Nginx
 
-# Instalando JDK 11
+## Docs
+https://documentation.opencms.org/opencms-documentation/introduction/get-started/
+https://tomcat.apache.org
+https://ubuntu.com/download
+
+https://medium.com/@jasonrbodie/learn-linux-install-apache-tomcat-10-and-nginx-on-ubuntu-24-04-5bcdd9fad1c9#b345
+
+## Notas
+- Baixar JDK 11 ⚠️
+- Atenção ao [OpenCms](#requisitos) que vai ser instalado, a versão do JDK e tomcat vão mudar se for outra versão de OpenCms
+- ⚠️ Tomcat 9 = JDK 11 - Pacotes Java EE
+- ⚠️ Tomcat 10 = JDK 17 - Pacotes Jakarta
+
+
+## Instalando JDK 11
   - sudo apt install openjdk-11-jdk
   - java -version
   - javac -version
 
-# Instalando Tomcat 9.0.35
+## Instalando Tomcat 9.0.35
 wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.95/bin/apache-tomcat-9.0.95.tar.gz
 
 tar -zxvf apache-tomcat-9.0.95.tar.gz
@@ -45,7 +55,7 @@ wget https://localhost:8080
 *cat* no index.html que foi baixado pra confirmar caso não seja feito na OS com GUI
 cat index.html | grep successfully
 
-# Configurando o PostgreSQL
+## Configurando o PostgreSQL
 Alterar o **pg_hba.conf** para **trust** para acessar o postgres sem senha
 - [x] Alterar a senha do **postgres** para **postgres**
 
@@ -53,7 +63,7 @@ Alterar o **pg_hba.conf** para **trust** para acessar o postgres sem senha
 sudo nano /etc/postgresql/14/main/pg_hba.conf
 
 - Alterar as permissões para trust do ipv4, ipv6, unix, tudo...
-![pghba](image-1.png)
+![pghba](/images/image-1.png)
 
 CTRL + O = Salvar
 CTRL + X = Sair
@@ -71,7 +81,7 @@ exit
 systemctl restart postgresql
 
 
-# Rodando OpenCms13
+## Rodando OpenCms13
 Finalmente com tudo configurado, vamos bater na URL do setup do OpenCms
 https://localhost:8080/opencms/setup
 
@@ -93,14 +103,14 @@ opencms
 NEXT!
 
 Aguardar até o fim da instalação, o site vai abrir automaticamente 🚀🚀 
+[Sucesso!](/images/image.png)
 
-# Aplicando NGINX ao projeto
+## Aplicando NGINX ao projeto
 sudo apt install nginx
 
 sudo nano /etc/nginx/sites-available/default
 ou
 sudo nano /etc/nginx/conf.d/
-
 
 
 server {
@@ -117,3 +127,13 @@ server {
 
 
 /etc/hosts 
+
+# Docker
+- Processo via Docker files
+
+## O projeto
+Os arquivos devem conter diretórios separados para cada imagem, a estrutura deve ser assim:
+- Main dir
+ - Ubuntu + JDK + Tomcat + OpenCms > Nginx(Instalar por ultimo)
+ - Postgres
+

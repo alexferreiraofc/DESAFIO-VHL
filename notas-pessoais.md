@@ -1,5 +1,5 @@
 # Desafio consiste em:
-criar uma aplicação com OpenCms + Postgres + Linux + Nginx com proxy reverso. O objetivo final é acessar a instalação OpenCMS através do NGINX com reverse proxy.
+Criar uma aplicação com OpenCms + Postgres + Linux + Nginx com proxy reverso. O objetivo final é acessar a instalação OpenCMS através do NGINX com reverse proxy.
 
 ## Devo:
 documentar todo o processo, passo a passo, fornecendo comandos utilizados
@@ -161,9 +161,16 @@ server {
 
 /etc/hosts 
 
-Porém o site não está indo, apesar de adicionar o localhost, ele meio que da uma sobrecarga e não acessa a url certa.
+Porém o site não está indo, apesar de adicionar o localhost, ele não me direciona ao /opencms, se eu tentar acessar manualmente a URL localhost:8080/opencms eu consigo acessar, agora colocando apenas o 127.0.0.1 ele não entra.
 
-Ainda não encontrei documentação suficiente sobre fazer esse proxy acessar o opencms, parece que quando ele tenta chegar nessa url, o tomcat joga de volta pro localhost vazio
+
+# Tentativa com Docker
+- O processo no Docker é muito mais rápido, porém pode haver confusão na comunicação dos serviços e na exposição das portas. Atenção aos volumes
+
+Necessário:
+[] Pasta base dos arquivos
+[] Ubuntu + JDK + Tomcat + OpenCms > Nginx(Instalar por ultimo)
+[] Postgres
 
 
 
