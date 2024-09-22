@@ -1,0 +1,2 @@
+projeto-docker/tomcat/opencms/opencms.war filter=lfs diff=lfs merge=lfs -text
+tomcat/opencms/opencms.war filter=lfs diff=lfs merge=lfs -text

@@ -168,10 +168,16 @@ Porém o site não está indo, apesar de adicionar o localhost, ele não me dire
 - O processo no Docker é muito mais rápido, porém pode haver confusão na comunicação dos serviços e na exposição das portas. Atenção aos volumes
 
 Necessário:
-[] Pasta base dos arquivos
-[] Ubuntu + JDK + Tomcat + OpenCms > Nginx(Instalar por ultimo)
-[] Postgres
+[x]1 - Pasta base dos arquivos
+[x]2 - Ubuntu + JDK + Tomcat + OpenCms > Nginx(Instalar por ultimo)
+[x]3 - Postgres
 
+O passo 1 é a hierarquia de pastas aqui do vscode, ficando desta forma:
+- projeto-docker
+  - tomcat/opencms
+  - postgres
+
+Como o postgres responde separado apenas expondo a porta 5432, posso deixar ele numa imagem a parte, porém não estou conseguindo fazer o setup do OpenCms, acredito que preciso fazer o passo a passo dentro do postgres pra trocar o password ou liberar trust no pg_hba.conf
 
 
 

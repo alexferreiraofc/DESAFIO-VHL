@@ -1,0 +1,27 @@
+# Imagem base do Ubuntu 22.04
+FROM ubuntu:22.04
+
+# Instala e atualiza a JDK 11
+RUN apt-get update && apt-get install -y \
+    openjdk-11-jdk \
+    wget \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Define o diretório de trabalho
+WORKDIR /usr/local/tomcat
+
+# Baixa o tomcat 9.0.35
+RUN wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.35/bin/apache-tomcat-9.0.35.tar.gz \
+    && tar -xvzf apache-tomcat-9.0.35.tar.gz \
+    && mv apache-tomcat-9.0.35/* /usr/local/tomcat/ \
+    && rm apache-tomcat-9.0.35.tar.gz
+
+# Expoe porta 8080(http)
+EXPOSE 8080
+
+# Inicia o Tomcat com o script do catalina, vai rodar em primeiro plano com logs
+CMD ["/usr/local/tomcat/bin/catalina.sh", "run"]
+
+# Copia o arquivo .war para a pasta de deploy do tomcat
+COPY opencms/opencms.war /usr/local/tomcat/webapps/

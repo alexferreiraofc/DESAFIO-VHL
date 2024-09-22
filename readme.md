@@ -15,9 +15,13 @@ Foi muito interessante participar desse desafio, espero que a documentação est
 Pode ser baixado clicando diretamente aqui ou usando **wget**.
 - [Ubuntu](https://releases.ubuntu.com/jammy/ubuntu-22.04.5-desktop-amd64.iso) - 22.04
 - Java 11 JDK
-  - sudo apt install openjdk-11-jdk
+ ```bash
+ sudo apt install openjdk-11-jdk
+```
 - PostgreSQL 14
-  - sudo apt install postgresql-14
+ ```bash
+ sudo apt install postgresql-14
+```
 - [Tomcat 9.0.95](https://downloads.apache.org/tomcat/tomcat-9/v9.0.95/bin/apache-tomcat-9.0.95.tar.gz)
 - [OpenCms 13](http://www.opencms.org/downloads/opencms/opencms-13.0.zip)
 - Nginx
@@ -37,20 +41,26 @@ https://medium.com/@jasonrbodie/learn-linux-install-apache-tomcat-10-and-nginx-o
 
 
 ## Instalando JDK 11
-  - sudo apt install openjdk-11-jdk
-  - java -version
-  - javac -version
+ ```bash
+ sudo apt install openjdk-11-jdk
+ java -version
+ javac -version
+```
 
 ## Instalando Tomcat 9.0.35
+ ```bash 
 wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.95/bin/apache-tomcat-9.0.95.tar.gz
-
+```
+ ```bash 
 tar -zxvf apache-tomcat-9.0.95.tar.gz
 sudo mv apache-tomcat-9.0.95 /opt/tomcat
+```
 
 > Testando tomcat
 /opt/tomcat/bin/./startup.sh
-
+ ```bash 
 wget https://localhost:8080
+```
 
 *cat* no index.html que foi baixado pra confirmar caso não seja feito na OS com GUI
 cat index.html | grep successfully
@@ -60,7 +70,9 @@ Alterar o **pg_hba.conf** para **trust** para acessar o postgres sem senha
 - [x] Alterar a senha do **postgres** para **postgres**
 
 - **Diretório**:
+ ```bash 
 sudo nano /etc/postgresql/14/main/pg_hba.conf
+```
 
 - Alterar as permissões para trust do ipv4, ipv6, unix, tudo...
 ![pghba](/images/image-1.png)
@@ -69,7 +81,7 @@ CTRL + O = Salvar
 CTRL + X = Sair
 
 - Novamente no terminal, execute os comandos na seguinte ordem:
-
+ ```bash 
 su -
 admin
 su - postgres
@@ -79,6 +91,7 @@ nova senha = postgres
 \q
 exit
 systemctl restart postgresql
+```
 
 
 ## Rodando OpenCms13
@@ -106,13 +119,17 @@ Aguardar até o fim da instalação, o site vai abrir automaticamente 🚀🚀
 [Sucesso!](/images/image.png)
 
 ## Aplicando NGINX ao projeto
+ ```bash
 sudo apt install nginx
-
+ 
 sudo nano /etc/nginx/sites-available/default
+```
 ou
+ ```bash 
 sudo nano /etc/nginx/conf.d/
+```
 
-
+ ```nano
 server {
     listen 80;
     server_name localhost;
@@ -124,16 +141,24 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 }
-
+```
 
 /etc/hosts 
 
-# Docker
-- Processo via Docker files
+# Docker 🐳 
+- Processo via Docker
 
 ## O projeto
-Os arquivos devem conter diretórios separados para cada imagem, a estrutura deve ser assim:
-- Main dir
- - Ubuntu + JDK + Tomcat + OpenCms > Nginx(Instalar por ultimo)
- - Postgres
+> [!IMPORTANTE]
+Os arquivos devem conter diretórios separados para cada imagem, o arquivo do opencms.war deve estar na pasta projeto/tomcat/opencms a estrutura deve ser assim:
 
+- projeto-docker
+ - Base (Ubuntu + JDK + Tomcat/opencms/opencms.war > Nginx(Instalar por ultimo))
+ - Postgres
+ - Nginx (acredito que será embutido no base)
+
+ O projeto pode ser iniciado acessando a pasta **projeto-docker** e rodando o seguinte comando:
+ 
+ ```bash
+ docker-compose up --build
+```

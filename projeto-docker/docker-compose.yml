@@ -1,0 +1,21 @@
+services:
+  postgres:
+    build: ./postgres
+    container_name: postgres_container
+    ports:
+      - "5432:5432"
+    volumes:
+    # Diretorio onde o volume vai ser salvo
+      - postgres_data:/var/lib/postgresql/data
+
+  tomcat:
+    build: ./tomcat
+    container_name: tomcat_container
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+volumes:
+# Nome do meu volume
+  postgres_data:

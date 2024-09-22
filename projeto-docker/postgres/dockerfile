@@ -1,0 +1,10 @@
+# Usa a imagem oficial do PostgreSQL 14
+FROM postgres:14
+
+# Variaveis do banco, pode ser deixado em branco, mas vai dar erro no setup do opencms
+ENV POSTGRES_DB=vhl_db
+ENV POSTGRES_USER=alex
+ENV POSTGRES_PASSWORD=alex
+
+# Expoe a porta 5432, padrão do postgres
+EXPOSE 5432
