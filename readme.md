@@ -158,7 +158,7 @@ http {
 }
 ```
 
-# Docker 🐳
+# Docker
 
 - Antes de executar o projeto, deve ser feito o download do arquivo *opencms.war* [aqui](http://www.opencms.org/downloads/opencms/opencms-13.0.zip)
 
